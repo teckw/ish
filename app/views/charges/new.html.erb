@@ -1,0 +1,153 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<style>
+
+a:hover{
+  text-decoration: underline;
+}
+#ish_logo{
+  margin-left: 10px;
+}
+
+.thumbnail{
+  padding-left: 3px;
+  padding-top: 10px;
+  height: 90%;
+  max-width: 100%;
+}
+#wrapper{
+  margin-left: 10px;
+}
+.highlight {
+  width: 50%;
+}
+
+.collection {
+  width: 30%;
+  position: center;
+  display: inline-block;
+  vertical-align: top;
+}
+#btn {
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+#modal1 {
+  max-height: 55%;
+}
+
+#logout {
+  background: none;
+  border: none;
+  padding: 0px;
+  font: inherit;
+  color: #444;
+}
+
+#right {
+  margin-right: 15px;
+}
+nav ul a, nav .brand-logo, #dropdown1 a, .collection i {
+  color: #444;
+}
+/* label color */
+   .input-field label {
+     color: #444;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=email]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=Password]:focus + label {
+     color: #444;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+    .input-field input[type=email]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   .input-field input[type=password]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #ff8a65;
+   }
+</style>
+
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper deep-orange lighten-2 z-depth-2">
+      <a href="/" class="brand-logo"><img src="/assets/ishlogo.png" height='60px' id="ish_logo"></a>
+      <ul class="right hide-on-med-and-down" id="right">
+        <li><a class="dropdown-button" href="#!" data-no-turbolink="true" data-activates="dropdown1"><%= @user.first_name %> <%= @user.last_name %><i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+        <ul id='dropdown1' class='dropdown-content'>
+          <li><a href="/users" data-no-turbolink="true">Main</a></li>
+          <li><a href="/edit/<%= @user.id %>" data-no-turbolink="true">Edit Profile</a></li>
+          <li><a href="/items/show" data-no-turbolink="true">Buy</a></li>
+          <li><a href="/items/create" data-no-turbolink="true">Sell</a></li>
+        </ul>
+          <li><form action="/logout" method="post">
+        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+        <input type="hidden" name="_method" value="delete">
+        <input type="submit" id="logout" value="Logout">
+        </form></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="row">
+<table class="highlight col s12">
+    <h3>Items in Cart:</h3>
+    <tr>
+        <th>Item Name</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+    <% @like.each do |l| %>
+    <% if l.user_id == @user.id %>
+    <tr>
+        <td><%= l.item.name %></td>
+        <td><%= l.item.description %></td>
+        <td>$ <%= l.item.price %></td>
+    </tr>
+    <% end %>
+    <% end %>
+</table>
+</div>
+<%= form_tag charges_path do %>
+  <article>
+    <label class="amount">
+      <span>Amount: $5,000,000.00</span>
+    </label>
+  </article>
+
+  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="Item Payment"
+          data-amount="500"
+          data-locale="auto"></script>
+<% end %>

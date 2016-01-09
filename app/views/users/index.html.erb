@@ -1,0 +1,360 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+	$(document).ready(function(){
+		$('.parallax').parallax();
+		$('.modal-trigger').leanModal();
+		$('select').material_select();
+
+		$('.slider').slider({full_width: true});
+	});
+</script>
+
+<style>
+	html{
+		background-color: #eceff1;
+	}
+	.promo i{
+		margin: 40px 0;
+		color: #ff8a65;
+		font-size: 7rem;
+		display: block;
+	}
+	#wrapper{
+		margin-left: 10px;
+	}
+	footer.page-footer {
+		margin-top: 0px;
+	}
+	#ish_logo{
+		margin-left: 10px;
+	}
+	#modal1{
+		max-height: 80%;
+	}
+	.dropdown-content{
+		height: 250px;
+	}
+	.parallax-container {
+		min-height: 450px;
+		line-height: 0;
+		height: auto;
+		color: rgba(255,255,255,.9);
+	}
+
+	nav ul a, nav .brand-logo, #dropdown1 a {
+		color: #444;
+	}
+	/* label color */
+   .input-field label {
+     color: #444;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=email]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=Password]:focus + label {
+     color: #444;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+    .input-field input[type=email]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   .input-field input[type=password]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #ff8a65;
+   }
+   .slider{
+   	width: 35%;
+
+   	margin: auto;
+   }
+   #para{
+   	margin-bottom: 10px
+   }
+</style>
+
+<div class="navbar-fixed">
+	<nav>
+		<div class="nav-wrapper deep-orange lighten-2 z-depth-2">
+			<a href="/" class="brand-logo center"><img src="/assets/ishlogo.png" height='60px' id="ish_logo"></a>
+			<ul class="right hide-on-med-and-down">
+				<li><a class="modal-trigger" href="#modal1" data-no-turbolink="true">Register</a></li>
+				<li><a class="modal-trigger" href="#modal2" data-no-turbolink="true">Login</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
+
+<!-- Register Modal -->
+<div id="modal1" class="modal">
+	<div class="modal-content">
+		<h4>Register</h4>
+		<div class="row">
+			<form action="/new" method="post" class="col s12">
+				<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<div class="row">
+					<div class="input-field col s6">
+						<i class="material-icons prefix">account_circle</i>
+						<input id="first_name" type="text" name="first_name" class="validate">
+						<label for="first_name">First Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="last_name" type="text" name="last_name" class="validate">
+						<label for="last_name">Last Name</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">email</i>
+						<input id="email" type="email" name ="email" class="validate">
+						<label for="email">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<i class="material-icons prefix">room</i>
+						<input id="city" name="city" type="text" class="validate">
+						<label for="city">City</label>
+					</div>
+					<div class="input-field col s6">
+						<select name="state" id="state">
+							<option value="" disabled selected>Pick your state</option>
+							<option value="AL">AL</option>
+							<option value="AK">AK</option>
+							<option value="AZ">AZ</option>
+							<option value="AR">AR</option>
+							<option value="CA">CA</option>
+							<option value="CO">CO</option>
+							<option value="CT">CT</option>
+							<option value="DE">DE</option>
+							<option value="DC">DC</option>
+							<option value="FL">FL</option>
+							<option value="GA">GA</option>
+							<option value="HI">HI</option>
+							<option value="ID">ID</option>
+							<option value="IL">IL</option>
+							<option value="IN">IN</option>
+							<option value="IA">IA</option>
+							<option value="KS">KS</option>
+							<option value="KY">KY</option>
+							<option value="LA">LA</option>
+							<option value="ME">ME</option>
+							<option value="MD">MD</option>
+							<option value="MA">MA</option>
+							<option value="MI">MI</option>
+							<option value="MN">MN</option>
+							<option value="MS">MS</option>
+							<option value="MO">MO</option>
+							<option value="MT">MT</option>
+							<option value="NE">NE</option>
+							<option value="NV">NV</option>
+							<option value="NH">NH</option>
+							<option value="NJ">NJ</option>
+							<option value="NM">NM</option>
+							<option value="NY">NY</option>
+							<option value="NC">NC</option>
+							<option value="ND">ND</option>
+							<option value="OH">OH</option>
+							<option value="OK">OK</option>
+							<option value="OR">OR</option>
+							<option value="PA">PA</option>
+							<option value="RI">RI</option>
+							<option value="SC">SC</option>
+							<option value="SD">SD</option>
+							<option value="TN">TN</option>
+							<option value="TX">TX</option>
+							<option value="UT">UT</option>
+							<option value="VT">VT</option>
+							<option value="VA">VA</option>
+							<option value="WA">WA</option>
+							<option value="WV">WV</option>
+							<option value="WI">WI</option>
+							<option value="WY">WY</option>
+						</select>
+						<label for="state">State</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<i class="material-icons prefix">lock</i>
+						<input id="password" name="password" type="password" class="validate">
+						<label for="password">Password</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="cpassword" name="cpassword" type="password" class="validate">
+						<label for="cpassword">Confirm Password</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn waves-effect waves-light deep-orange lighten-2" type="submit">Register
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!--  Login Modal -->
+<div id="modal2" class="modal">
+	<div class="modal-content">
+		<h4>Login</h4>
+		<div class="row">
+			<form action="/login" method="post" class="col s12">
+			<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+				<div class="row">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">email</i>
+						<input id="loginemail" type="email" name="loginemail" class="validate">
+						<label for="loginemail">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<i class="material-icons prefix">lock</i>
+						<input id="loginpassword" name="loginpassword" type="password" class="validate">
+						<label for="loginpassword">Password</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn waves-effect waves-light deep-orange lighten-2" type="submit" name="action">Login
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Mid Content -->
+<div class="parallax-container">
+	<div class="section no-pad-bot">
+		<div class="container">
+			<br>
+			<br>
+			<h1 class="header center white-text text-lighten-2">Welcome to Ish</h1>
+			<div class="row center">
+				<h5 class="header col s12 light">the new way of buying and selling stuff</h5>
+			</div>
+			<div class="row center">
+				<a href="#modal1" class="modal-trigger btn-large waves-effect waves-light deep-orange lighten-2">Get Started</a>
+			</div>
+			<br>
+			<br>
+		</div>
+	</div>
+	<div class="parallax valign-wrapper"><img src="/assets/wood.JPG" width="100%"></div>
+</div>
+<div class="section white">
+		<div class="row">
+				<div class="col s4">
+					<div class="center promo promo-example">
+						<i class="material-icons">favorite</i>
+						<h4 class="promo-caption">Like</h4>
+						<p class="light center">Looking for stuff that you might enjoy having in your home? Man cave? Office? Garage? Once you see something you like, go ahead and like it! </p>
+					</div>
+				</div>
+					<div class="col s4">
+					<div class="center promo promo-example">
+						<i class="material-icons">attach_money</i>
+						<h4 class="promo-caption">Pay</h4>
+						<p class="light center">After you've found something sweet to add to your collection, we ensure quick and easy payment!</p>
+					</div>
+				</div>
+					<div class="col s4">
+					<div class="center promo promo-example">
+						<i class="material-icons">redeem</i>
+						<h4 class="promo-caption">Receive</h4>
+						<p class="light center">We quickly get your items to your doorstep!</p>
+					</div>
+				</div>
+			</div>
+	</div>
+<div class="parallax-container" id='para'>
+	<div class="parallax"><img src="/assets/brick.JPG" width="100%"></div>
+</div>
+
+<div class="slider">
+   <ul class="slides">
+     <li>
+       <img src="http://www.yeezysale.ru/images/201502/goods_img/Air-Jordan-4-Cheap-Sneaker-Red-October-766-P-1423035239345.jpg" > <!-- random image -->
+       <div class="caption center-align">
+         <h3>Want this ish?!</h3>
+         <h5 class="light grey-text text-lighten-3">Cop this ish!!!</h5>
+       </div>
+     </li>
+     <li>
+       <img src="http://www.nativeskatestore.co.uk/images/diamond-supply-co-diamant-bi-fold-wallet-black-p21277-51813_zoom.jpg"> <!-- random image -->
+       <div class="caption left-align">
+         <h3></h3>
+         <h5 class="light grey-text text-lighten-3"></h5>
+       </div>
+     </li>
+     <li>
+       <img src="http://chodeal24h.vn/data/upload/chodeal24h.vn_loa%20bluetooth%20beats%20pill6.jpg"> <!-- random image -->
+       <div class="caption right-align">
+         <h3 class="black-text text-lighten-3"></h3>
+         <h5 class="black-text text-lighten-3"></h5>
+       </div>
+     </li>
+     
+   </ul>
+ </div>
+<div class="parallax-container">
+	<div class="section no-pad-bot">
+		<div class="container">
+			<div class="row center">
+				<h5 class="header col s12 light"></h5>
+			</div>
+		</div>
+	</div>
+	<div class="parallax"><img src="/assets/grass.JPG" width="100%"></div>
+</div>
+<!-- Footer -->
+<footer class="page-footer deep-orange lighten-2">
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="white-text">ISH</h5>
+				<p class="white-text text-lighten-4">You'll never buy things the same way ever again.</p>
+			</div>
+			<div class="col l4 offset-l2 s12">
+				<h5 class="white-text">ISH Links</h5>
+				<ul>
+					<li><a class="white-text text-lighten-3" href="/">HOME</a></li>
+					<li><a class="white-text text-lighten-3" href="/about">ABOUT US</a></li>
+				</ul>
+			</div>
+		</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2015 Ish
+			</div>
+		</div>
+</footer>

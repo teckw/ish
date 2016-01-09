@@ -1,0 +1,168 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+	$(document).ready(function(){
+		$('.parallax').parallax();
+		$('.modal-trigger').leanModal();
+		$('select').material_select();
+		$('.slider').slider({full_width: true});
+	});
+</script>
+
+<style>
+	#wrapper{
+		width: 100%;
+		height: 625px;
+		margin: 0px auto;
+		background-color: #eceff1;
+	}
+	#photo {
+		margin-top: 30px;
+	}
+
+	#buttons {
+		margin-top: 10px;
+	}
+	#buttons a {
+		margin-left: 30px;
+	}
+	#box {
+		border: 2px solid silver;
+		border-radius: 10px;
+		width: 500px;
+		height: 600px;
+		background-color: white;
+		margin: auto;
+	}
+	#logout {
+		background: none;
+		border: none;
+		padding: 0px;
+		font: inherit;
+		color: #444;
+	}
+
+	#right {
+		margin-right: 15px;
+	}
+	nav ul a, nav .brand-logo, #dropdown1 a {
+		color: #444;
+	}
+
+	#ipic{
+		max-width: 100%;
+	}
+	/* label color */
+   .input-field label {
+     color: #444;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=email]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=Password]:focus + label {
+     color: #444;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+    .input-field input[type=email]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   .input-field input[type=password]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #ff8a65;
+   }
+</style>
+
+<div class="navbar-fixed">
+	<nav>
+		<div class="nav-wrapper deep-orange lighten-2 z-depth-2">
+			<a href="/" class="brand-logo center"><img src="/assets/ishlogo.png" height='60px' id="ish_logo"></a>
+		  <ul class="right hide-on-med-and-down" id="right">
+		  	<li> <a href="/checkout"><i class="material-icons prefix">shopping_cart</i></a></li>
+		    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><%= @user.first_name %> <%= @user.last_name %><i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+		    <ul id='dropdown1' class='dropdown-content'>
+		      <li><a href="/users" data-no-turbolink="true">Main</a></li>
+		      <li><a href="/edit/<%= @user.id %>" data-no-turbolink="true">Edit Profile</a></li>
+		      <li><a href="/items/show" data-no-turbolink="true">Buy</a></li>
+		      <li><a href="/items/create" data-no-turbolink="true">Sell</a></li>
+		    </ul>
+		      <li><form action="/logout" method="post">
+			  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+			  <input type="hidden" name="_method" value="delete">
+			  <input type="submit" id="logout" value="Logout">
+			  </form></li>
+		  </ul>
+		</div>
+	</nav>
+</div>
+
+<div id="wrapper">
+	<div id="box" class="center">
+	<h2 class="center-align">Items Near You</h2>
+    	<div id="ipic" class="img-circle"><%= image_tag(@ritem.ipic, size: "200x200") %></div>
+    	<div class="center-align">
+    		<h4><%= @ritem.name %></h4>
+    		<h5>$ <%= @ritem.price %></h5>
+    		<p>Posted by: <%= @ritem.user.first_name %></p>
+    	</div>
+    	<form action="/unlike/<%= @ritem.id %>" method="post">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<div id="buttons" class="center-align">
+			<button type="submit" class="btn-floating btn-large red" data-no-turbolink="true"><i class="material-icons">close</i>
+		</form>
+		<form action="/like/<%= @ritem.id %>" method="post">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+			<button type="submit" class="btn-floating btn-large green" data-no-turbolink="true"><i class="material-icons">favorite</i>
+		</div>
+		</form>
+	</div>
+
+<footer class="page-footer deep-orange lighten-2">
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="white-text">ISH</h5>
+				<p class="white-text text-lighten-4">You'll never buy things the same way ever again.</p>
+			</div>
+			<div class="col l4 offset-l2 s12">
+				<h5 class="white-text">ISH Links</h5>
+				<ul>
+					<li><a class="white-text text-lighten-3" href="/">HOME</a></li>
+					<li><a class="white-text text-lighten-3" href="/about">ABOUT US</a></li>
+				</ul>
+			</div>
+		</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2015 Ish
+			</div>
+		</div>
+</footer>
+</div> <!-- end of wrapper -->

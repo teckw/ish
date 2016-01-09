@@ -1,0 +1,294 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+	$(document).ready(function(){
+		$('.parallax').parallax();
+		$('.modal-trigger').leanModal();
+		$('select').material_select();
+	});
+</script>
+
+<style>
+html{
+	background-color: #eceff1;
+}
+a:hover{
+	text-decoration: underline;
+}
+#ish_logo{
+	margin-left: 10px;
+}
+#white{
+	background-color: white;
+}
+.thumbnail{
+	padding-left: 3px;
+	padding-top: 10px;
+	height: 90%;
+	max-width: 100%;
+}
+#wrapper{
+	margin-left: 10px;
+}
+.highlight {
+	width: 50%;
+}
+
+.collection {
+	width: 30%;
+	position: center;
+	display: inline-block;
+	vertical-align: top;
+}
+#btn {
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+#modal1 {
+	max-height: 55%;
+}
+
+#logout {
+	background: none;
+	border: none;
+	padding: 0px;
+	font: inherit;
+	color: #444;
+}
+#welcome, #rewards{
+	display: inline-block;
+}
+#rewards{
+	float: right;
+	border: 1px solid silver;
+	border-radius: 5px;
+	padding: 10px;
+	margin-right: 20px;
+	margin-top: 20px;
+	background-color: #fff9c4;
+}
+#right {
+	margin-right: 15px;
+}
+nav ul a, nav .brand-logo, #dropdown1 a, .collection i {
+	color: #444;
+}
+/* label color */
+   .input-field label {
+     color: #444;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=email]:focus + label {
+     color: #444;
+   }
+   .input-field input[type=Password]:focus + label {
+     color: #444;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+    .input-field input[type=email]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   .input-field input[type=password]:focus {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #444;
+     box-shadow: 0 1px 0 0 #444;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #ff8a65;
+   }
+</style>
+
+<div class="navbar-fixed">
+	<nav>
+		<div class="nav-wrapper deep-orange lighten-2 z-depth-2">
+			<a href="/" class="brand-logo center"><img src="/assets/ishlogo.png" height='60px' id="ish_logo"></a>
+		  <ul class="right hide-on-med-and-down" id="right">
+		  	<li> <a href="/checkout"><i class="material-icons prefix">shopping_cart</i></a></li>
+		    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><%= @user.first_name %> <%= @user.last_name %><i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+		    <ul id='dropdown1' class='dropdown-content'>
+		      <li><a href="/users" data-no-turbolink="true">Main</a></li>
+		      <li><a href="/edit/<%= @user.id %>" data-no-turbolink="true">Edit Profile</a></li>
+		      <li><a href="/items/show" data-no-turbolink="true">Buy</a></li>
+		      <li><a href="/items/create" data-no-turbolink="true">Sell</a></li>
+		    </ul>
+		      <li><form action="/logout" method="post">
+			  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+			  <input type="hidden" name="_method" value="delete">
+			  <input type="submit" id="logout" value="Logout">
+			  </form></li>
+		  </ul>
+		</div>
+	</nav>
+</div>
+
+<div id="wrapper">
+
+	<h2 id="welcome">Welcome, <%= @user.first_name %></h2>
+	<div id="rewards">
+	<h5>Reward Points Accumulated: 49</h5>
+	<p id="points">1 reward point away from $5 off your next purchase</p>
+	</div>
+
+	<h3>Items you posted:</h3>
+		<% @items.each do |i| %>
+			<% if i.user_id == @user.id %>
+				<ul class="collection col">
+					<li class="collection-item avatar">
+						<div class="circle"><%= image_tag i.ipic, :class => "thumbnail", :alt => "/assets/no.jpg" %></div>
+						<span class="title">Item: <%= i.name %></span>
+						<p class="truncate">Price: $<%= i.price %><br>
+						Description: <%= i.description %>
+						</p>
+					<li>
+						<a id="edit" href="#<%= i.id %>" class="secondary-content modal-trigger"><i class="material-icons">mode_edit</i></a>
+						<a id="delete" href="#<%= i.id %>delete" class="secondary-content modal-trigger"><i class="material-icons">delete</i></a>
+					</li>
+					</li>
+				</ul>
+			<% end %>
+
+<!-- Edit Modal -->
+	<div id="<%= i.id %>" class="modal bottom-sheet row m6">
+		<div class="modal-content">
+			<h5>Edit your item</h5>
+		<div class="row">
+			<form action="/items/update/<%= i.id %>" method="post" class="col s12">
+			<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+			<input type="hidden" name="_method" value="patch">
+		<div class="row">
+			<div class="input-field col s6">
+				<i class="material-icons prefix">redeem</i>
+				<input id="name" name="name" type="text" class="validate" value="<%= i.name %>">
+				<label for="name">Name</label>
+			</div>
+			<div class="input-field col s6">
+				<i class="material-icons prefix">attach_money</i>
+				<input id="price" name="price" type="text" class="validate" value="<%= i.price %>">
+				<label for="price">Price</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
+				<i class="material-icons prefix">mode_edit</i>
+				<input id="description" name="description" type="text" class="validate" value="<%= i.description %>">
+				<label for="description">Description</label>
+			</div>
+			<div class="file-field input-field col s6">
+				<div class="btn deep-orange lighten-2">
+					<span>File</span>
+					<input type="file" multiple>
+				</div>
+				<div class="file-path-wrapper">
+					<input class="file-path validate" type="text" placeholder="Upload one or more pics">
+				</div>
+			</div>
+		</div>
+			<div class="modal-footer">
+				<button class="btn deep-orange lighten-2" type="submit" name="action">Update Item</button> 
+			</div>
+			</form>
+		</div>
+	</div>
+</div> <!-- end of Edit Modal -->
+
+<!-- Delete Modal -->
+<div id="<%= i.id %>delete" class="modal bottom-sheet row m6">
+	<form action="/items/delete/<%= i.id %>" method="post" class="col s12">
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<input type="hidden" name="_method" value="delete">
+		<div class="modal-content">
+			<h5>Delete your item?</h5>
+			<div class="row">
+				<div class="input-field col s4">
+					<input disabled value="<%= i.name %>" id="disabled" type="text" class="validate">
+					<label for="disabled">Name</label>
+				</div>
+				<div class="input-field col s4">
+					<input disabled value="<%= i.description %>" id="disabled" type="text" class="validate">
+					<label for="disabled">Description</label>
+				</div>
+				<div class="input-field col s4">
+					<input disabled value="<%= i.price %>" id="disabled" type="text" class="validate">
+					<label for="disabled">Price</label>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn deep-orange lighten-2" type="submit" name="action">Yes</button>
+				<a href="/users"><button style="margin-right:10px" class="btn deep-orange lighten-2">No</button></a>
+			</div>
+			</form>
+		</div>
+</div> <!-- end of Delete Modal -->
+<% end %>
+
+	<h3>Items you bought:</h3>
+	<table class="highlight">
+		<tr>
+			<th>Item Name</th>
+			<th>Description</th>
+			<th>Price</th>
+		</tr>
+		<tr>
+			<td>Notebook</td>
+			<td>College Ruled made with granite</td>
+			<td>$ 20.99</td>
+		</tr>
+		<tr>
+			<td>Fishing Pole</td>
+			<td>Sea Bass Championship winning fishing pole</td>
+			<td>$ 32.31</td>
+		</tr>
+		<tr>
+			<td>Justin Bieber</td>
+			<td>Just Bieber leaked videos (EXPLICIT)</td>
+			<td>$ 9.99</td>
+		</tr>
+	</table>
+
+	<h4><a href="/items/show">Browse nearby items</a></h4>
+
+</div><!-- end of wrapper -->
+<footer class="page-footer deep-orange lighten-2">
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="white-text">ISH</h5>
+				<p class="white-text text-lighten-4">You'll never buy things the same way ever again.</p>
+			</div>
+			<div class="col l4 offset-l2 s12">
+				<h5 class="white-text">ISH Links</h5>
+				<ul>
+					<li><a class="white-text text-lighten-3" href="/">HOME</a></li>
+					<li><a class="white-text text-lighten-3" href="/about">ABOUT US</a></li>
+				</ul>
+			</div>
+		</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				© 2015 Ish
+			</div>
+		</div>
+</footer>
